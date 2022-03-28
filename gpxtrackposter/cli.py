@@ -231,7 +231,9 @@ def main() -> None:
         log.addHandler(handler)
 
     loader = track_loader.TrackLoader(args.workers)
-    loader.set_cache_dir(os.path.join(appdirs.user_cache_dir(__app_name__, __app_author__), "tracks"))
+    if args.gpx_dir is None:
+        loader.set_cache_dir(os.path.join(appdirs.user_cache_dir(__app_name__, __app_author__), "tracks"))
+
     if not loader.year_range.parse(args.year):
         raise ParameterError(f"Bad year range: {args.year}.")
 
@@ -278,6 +280,11 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+
+    # Map plotting packages
+    # folium
+    # geopandas
+    # descartes
     try:
         main()
     except PosterError as e:
